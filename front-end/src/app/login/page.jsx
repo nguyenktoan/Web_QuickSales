@@ -7,6 +7,7 @@ import { useState } from "react";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [errorText, setErrorText] = useState("");
   const router = useRouter();
   const onLoginClick = async () => {
@@ -18,7 +19,6 @@ const LoginPage = () => {
         password,
       };
       const res = await callAPI("/auth/local", "POST", data);
-
       setToken(res.data.jwt);
       setUser(res.data.user);
       router.replace("/");
@@ -44,7 +44,7 @@ const LoginPage = () => {
               Don't have an account{" "}
               <a
                 href="/register"
-                className="text-blue-600 font-semibold hover:underline ml-1"
+                className="text-[#54b09f] font-semibold hover:underline ml-1"
               >
                 Register here
               </a>
@@ -112,7 +112,7 @@ const LoginPage = () => {
             <div>
               <button
                 type="button"
-                className="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                className="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-[#54b09f] hover:bg-[#428f81] focus:outline-none"
                 onClick={onLoginClick}
               >
                 Log in

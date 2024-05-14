@@ -5,168 +5,144 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const RegisterPage = () => {
+  const [errorText, setErrorText] = useState("");
+
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
-    phone: "",
     password: "",
     cpassword: "",
     username: "",
+    name: "",
   });
   const router = useRouter();
-  const [successText, setSuccessText] = useState("");
-  const [errorText, setErrorText] = useState("");
 
+  const onSignUpClick = async () => {
+    console.table({
+      Email: formData.email,
+      Password: formData.password,
+      "Confirm Password": formData.cpassword,
+      Username: formData.username,
+      Name: formData.name,
+    });
+    try {
+      const data = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        cpassword: formData.cpassword,
+        Name: formData.name,
+      };
+      const res = await callAPI("/auth/local/register", "POST", data);
+      console.log("User profile", res.data.user);
+      console.log("User token", res.data.jwt);
+      router.replace("/login");
+    } catch (error) {
+      console.log(error);
+      setErrorText("Error occurred during registration");
+    }
+  };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const onSignUpClick = async () => {
-    const { firstName, lastName, email, phone, password, cpassword } = formData;
-    // Tạo username
-    function generateUsername(user) {
-      const randomNumber = Math.floor(10000 + Math.random() * 90000); // Số ngẫu nhiên từ 10000 đến 99999
-      return user + randomNumber.toString().substring(1); // Chuyển số thành chuỗi và lấy 4 chữ số cuối cùng
-    }
-    const user = "user";
-    const username = generateUsername(user);
-    console.log("Generated username:", username);
-    // Gán giá trị mới cho formData
-    setFormData({ ...formData, username: username });
-
-    console.table({
-      "First Name": formData.firstName,
-      "Last Name": formData.lastName,
-      Email: formData.email,
-      Phone: formData.phone,
-      Password: formData.password,
-      "Confirm Password": formData.cpassword,
-      Username: username, // Sử dụng giá trị mới của username
-    });
-
-    try {
-      if (password !== cpassword) {
-        setErrorText("Mật khẩu và mật khẩu xác nhận phải giống nhau.");
-        return;
-      }
-      const data = {
-        firstName,
-        lastName,
-        email,
-        phone,
-        password,
-        cpassword,
-        username,
-      };
-      const res = await callAPI("/auth/local/register", "POST", data);
-
-      if (res.ok) {
-        router.replace("/login");
-        setSuccessText("Đăng ký thành công");
-      } else {
-        // Registration failed, handle the error response
-        const errorData = await res.json();
-        setErrorText("Đăng ký thất bại: " + errorData.message);
-        console.error("Registration failed:", errorData.message);
-      }
-    } catch (error) {
-      // Handle other errors, e.g., network errors
-      setErrorText("Đã xảy ra lỗi khi đăng ký.");
-      console.error("Error registering:", error);
-    }
-  };
   return (
-    <div className="max-w-4xl mx-auto font-[sans-serif] text-[#333] p-6">
-      <div className="text-center mb-16">
-        <a href="javascript:void(0)">
-          <img src="/logoH.png" alt="logo" className="w-52 inline-block" />
-        </a>
-        <h4 className="text-base font-semibold mt-3">
-          Sign up into your account
-        </h4>
-      </div>
-      <form>
-        <div className="grid sm:grid-cols-2 gap-y-7 gap-x-12">
-          <div>
-            <label className="text-sm mb-2 block">First Name</label>
+    <div className="flex flex-col justify-center font-[sans-serif] text-[#333] p-4">
+      <div className="max-w-md w-full mx-auto shadow-[0_2px_10px_-3px_rgba(6,81,237,0.5)] p-8 relative mt-12">
+        <div className="bg-white w-20 h-20 border-[8px] p-1.5 absolute left-0 right-0 mx-auto -top-10 rounded-full overflow-hidden">
+          <a href="javascript:void(0)">
+            <img src="/logoH.png" alt="logo" className="w-full inline-block" />
+          </a>
+        </div>
+        <form className="mt-12">
+          <h3 className="text-xl font-bold text-gray-300 mb-8 text-center">
+            Create free account
+          </h3>
+          <div className="space-y-4">
             <input
-              name="firstName"
+              name="name"
               type="text"
-              value={formData.firstName}
+              className="bg-gray-100 w-full text-sm px-4 py-4 focus:bg-transparent outline-orange-300 transition-all"
+              placeholder="Enter your name"
+              value={formData.name}
               onChange={handleChange}
-              className="bg-gray-100 w-full text-sm px-4 py-3.5 rounded-md outline-blue-500"
-              placeholder="Enter name"
+              required
             />
-          </div>
-          <div>
-            <label className="text-sm mb-2 block">Last Name</label>
             <input
-              name="lastName"
+              name="username"
               type="text"
-              value={formData.lastName}
-              onChange={handleChange} //
-              className="bg-gray-100 w-full text-sm px-4 py-3.5 rounded-md outline-blue-500"
-              placeholder="Enter last name"
+              className="bg-gray-100 w-full text-sm px-4 py-4 focus:bg-transparent outline-orange-300 transition-all"
+              placeholder="Enter username"
+              value={formData.username}
+              onChange={handleChange}
+              required
             />
-          </div>
-          <div>
-            <label className="text-sm mb-2 block">Email Id</label>
+            {/* email */}
             <input
               name="email"
               type="text"
+              className="bg-gray-100 w-full text-sm px-4 py-4 focus:bg-transparent outline-orange-300 transition-all"
+              placeholder="Enter email"
               value={formData.email}
               onChange={handleChange}
-              className="bg-gray-100 w-full text-sm px-4 py-3.5 rounded-md outline-blue-500"
-              placeholder="Enter email"
+              required
             />
-          </div>
-          <div>
-            <label className="text-sm mb-2 block">Mobile No.</label>
-            <input
-              name="phone"
-              type="number"
-              value={formData.phone}
-              onChange={handleChange}
-              pattern="[0-9]*"
-              className="bg-gray-100 w-full text-sm px-4 py-3.5 rounded-md outline-blue-500"
-              placeholder="Enter mobile number"
-            />
-          </div>
-          <div>
-            <label className="text-sm mb-2 block">Password</label>
             <input
               name="password"
               type="password"
+              className="bg-gray-100 w-full text-sm px-4 py-4 focus:bg-transparent outline-orange-300 transition-all"
+              placeholder="Enter password"
               value={formData.password}
               onChange={handleChange}
-              className="bg-gray-100 w-full text-sm px-4 py-3.5 rounded-md outline-blue-500"
-              placeholder="Enter password"
+              required
             />
-          </div>
-          <div>
-            <label className="text-sm mb-2 block">Confirm Password</label>
             <input
               name="cpassword"
               type="password"
+              className="bg-gray-100 w-full text-sm px-4 py-4 focus:bg-transparent outline-orange-300 transition-all"
+              placeholder="Enter confirm password"
               value={formData.cpassword}
               onChange={handleChange}
-              className="bg-gray-100 w-full text-sm px-4 py-3.5 rounded-md outline-blue-500"
-              placeholder="Enter confirm password"
+              required
             />
+            <div className="flex items-center">
+              <input
+                id="remember-me"
+                name="remember-me"
+                type="checkbox"
+                className="h-4 w-4 shrink-0 border-gray-300 rounded"
+              />
+              <label for="remember-me" className="ml-3 block text-sm">
+                I accept the{" "}
+                <a
+                  href="javascript:void(0);"
+                  className="text-[#54b09f] font-semibold hover:underline ml-1"
+                >
+                  Terms and Conditions
+                </a>
+              </label>
+            </div>
           </div>
-        </div>
-        {successText && <p className="text-green-500 mt-3">{successText}</p>}
-        {errorText && <p className="text-red-500 mt-5 ">{errorText}</p>}
-        <div className="!mt-10">
-          <button
-            type="button"
-            onClick={onSignUpClick}
-            className="min-w-[150px] py-3 px-4 text-sm font-semibold rounded text-white bg-blue-500 hover:bg-blue-600 focus:outline-none"
-          >
-            Sign up
-          </button>
-        </div>
-      </form>
+          {/* SignUp Button */}
+          <div className="mt-8">
+            <button
+              type="button"
+              onClick={onSignUpClick}
+              className="w-full py-4 px-4 text-sm font-semibold text-white bg-[#54b09f] hover:bg-[#428f81] focus:outline-none"
+            >
+              Create an account
+            </button>
+          </div>
+
+          <p className="text-sm mt-8 text-center">
+            Already have an account?{" "}
+            <a
+              href="/login"
+              className="text-[#54b09f] font-semibold hover:underline ml-1"
+            >
+              Login here
+            </a>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };

@@ -65,16 +65,10 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "firstName": {
-      "type": "string"
-    },
-    "lastName": {
-      "type": "string"
-    },
     "cpassword": {
       "type": "password"
     },
-    "phone": {
+    "name": {
       "type": "string"
     }
   }

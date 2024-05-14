@@ -34,5 +34,9 @@ export const isLogined = () => {
   if (token === null || token === undefined || token === "") return false;
   const obj = parseJwt(token);
   const exp = obj.exp ? obj.exp : 0;
-  return Date.now() >= exp * 1000;
+  return Date.now() <= exp * 1000;
+};
+export const logout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
 };

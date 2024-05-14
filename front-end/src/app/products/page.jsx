@@ -1,6 +1,8 @@
 "use client";
 import ProductComponent from "@/components/product-component";
 import { callAPI } from "@/utils/api-caller";
+import { helper } from "@/utils/api-caller";
+
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -36,12 +38,13 @@ const ProductsPage = () => {
   };
   return (
     <div>
-      <h1 className="text-3xl font-bold text-left ml-10 mt-5  text-gray-900">
-        Products
-      </h1>
+      <div className=" text-3xl font-bold text-left ml-24 mt-5 text-gray-900">
+        <span> Products</span>
+      </div>
       <section
+        style={{ minHeight: "400px" }}
         id="Projects"
-        className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
+        className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
       >
         {products.map((value, index) => {
           console.log(value.attributes.image.data[0].attributes.url);

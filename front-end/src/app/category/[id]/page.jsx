@@ -46,10 +46,18 @@ const ProductByCategory = () => {
   };
   return (
     <div>
-      Categories/{category !== null && category.attributes.name}
+      <div className="flex items-center text-base">
+        <span className=" font-bold text-left ml-10 mt-5 text-gray-900">
+          Categories
+        </span>
+        <span className=" font-bold text-left ml-2 mt-5 text-blue-600">/</span>
+        <span className=" font-bold text-left ml-2 mt-5 text-blue-600">
+          {category !== null && category.attributes.name}
+        </span>
+      </div>
       <section
         id="Projects"
-        className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
+        className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
       >
         {products.map((value, index) => {
           return (

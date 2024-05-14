@@ -15,6 +15,7 @@ const SearchPage = () => {
     searchParams.get("page") !== null ? +searchParams.get("page") : 1;
   const [pageCount, setPageCount] = useState(1);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const search = getSearchValueFromURL();
     if (search) {
