@@ -6,77 +6,79 @@ const URL_SERVER = process.env.NEXT_PUBLIC_BACKEND_SERVER_MEDIA;
 const ViewDetailProduct = () => {
   const params = useParams();
   const [product, setProduct] = useState(null);
+
   useEffect(() => {
-    getDetailProduct();
-  }, []);
-  const getDetailProduct = async () => {
-    try {
-      const res = await callAPI(
-        "/products/" + params.id + "?populate=*",
-        "GET"
-      );
-      console.log(res);
-      setProduct(res.data.data);
-    } catch (error) {
-      console.log(error);
+    const getDetailProduct = async () => {
+      try {
+        const res = await callAPI(`/products/${params.id}?populate=*`, "GET");
+        setProduct(res.data.data);
+      } catch (error) {
+        console.error(error);
+        // Cập nhật trạng thái hoặc hiển thị thông báo lỗi cho người dùng nếu cần
+      }
+    };
+
+    if (params.id) {
+      getDetailProduct();
     }
-  };
+  }, [params]);
+
   // id={value.id}
   // key={index} productName={value.attributes.name}
   // price={value.attributes.price}
   // brand={value.attributes.category.data.attributes.name}
   // imageUrl={value.attributes.image.data[0].attributes.url} />
   return product !== null ? (
-    <div class="font-[sans-serif]">
-      <div class="p-6 lg:max-w-7xl max-w-2xl max-lg:mx-auto">
-        <div class="grid items-start grid-cols-1 lg:grid-cols-2 gap-10">
-          <div class="w-full lg:sticky top-0 text-center">
-            <div class="lg:h-[600px]">
+    <div className="font-[sans-serif]">
+      <div className="p-6 lg:max-w-7xl max-w-2xl max-lg:mx-auto">
+        <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-10">
+          <div className="w-full lg:sticky top-0 text-center">
+            <div className="lg:h-[600px]">
               <img
                 src={
                   URL_SERVER + product.attributes.image.data[0].attributes.url
                 }
                 alt="Product"
-                class="lg:w-11/12 w-full h-full rounded-xl object-cover object-top"
+                className="lg:w-11/12 w-full h-full rounded-xl object-cover object-top"
               />
             </div>
           </div>
           <div>
-            <div class="flex flex-wrap items-start gap-4">
+            <div className="flex flex-wrap items-start gap-4">
               <div>
                 {/* name */}
-                <h2 class="text-2xl font-extrabold text-gray-800">
+                <h2 className="text-2xl font-extrabold text-gray-800">
                   {product.attributes.name}
                 </h2>
                 {/* category */}
-                <p class="text-sm text-gray-400 mt-2">
+                <p className="text-sm text-gray-400 mt-2">
                   {product.attributes.category.data.attributes.name}
                 </p>
               </div>
-              <div class="ml-auto flex flex-wrap gap-4">
+              <div className="ml-auto flex flex-wrap gap-4">
                 <button
                   type="button"
-                  class="px-2.5 py-1.5 bg-pink-100 text-xs text-pink-600 rounded-md flex items-center"
+                  className="px-2.5 py-1.5 bg-pink-100 text-xs text-pink-600 rounded-md flex items-center"
                 ></button>
               </div>
             </div>
-            <hr class="my-8" />
-            <div class="flex flex-wrap gap-4 items-start">
+            <hr className="my-8" />
+            <div className="flex flex-wrap gap-4 items-start">
               <div>
-                <p class="text-gray-800 text-3xl font-bold ">
+                <p className="text-gray-800 text-3xl font-bold ">
                   {product.attributes.price.toLocaleString("vi-VN", {
                     style: "currency",
                     currency: "VND",
                   })}
                 </p>
               </div>
-              <div class="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4">
                 <button
                   type="button"
-                  class="px-2.5 py-1.5 bg-pink-100 text-xs text-pink-600 rounded-md flex items-center"
+                  className="px-2.5 py-1.5 bg-pink-100 text-xs text-pink-600 rounded-md flex items-center"
                 >
                   <svg
-                    class="w-3 mr-1"
+                    className="w-3 mr-1"
                     fill="currentColor"
                     viewBox="0 0 14 13"
                     xmlns="http://www.w3.org/2000/svg"
@@ -86,11 +88,11 @@ const ViewDetailProduct = () => {
                 </button>
                 <button
                   type="button"
-                  class="px-2.5 py-1.5 bg-gray-100 text-xs text-gray-800 rounded-md flex items-center"
+                  className="px-2.5 py-1.5 bg-gray-100 text-xs text-gray-800 rounded-md flex items-center"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="w-3 mr-1"
+                    className="w-3 mr-1"
                     fill="currentColor"
                     viewBox="0 0 32 32"
                   >
@@ -111,95 +113,97 @@ const ViewDetailProduct = () => {
                 </button>
               </div>
             </div>
-            <hr class="my-8" />
-            <div class="mt-8">
-              <h3 class="text-lg font-bold text-gray-800">
+            <hr className="my-8" />
+            <div className="mt-8">
+              <h3 className="text-lg font-bold text-gray-800">
                 Product Description
               </h3>
-              <p class="text-sm text-gray-400 mt-4">
+              <p className="text-sm text-gray-400 mt-4">
                 {product.attributes.description}
               </p>
             </div>
             {/* <div>
-              <h3 class="text-lg font-bold text-gray-800">Choose a Size</h3>
-              <div class="flex flex-wrap gap-4 mt-4">
+              <h3 className="text-lg font-bold text-gray-800">Choose a Size</h3>
+              <div className="flex flex-wrap gap-4 mt-4">
                 <button
                   type="button"
-                  class="w-12 h-12 border-2 hover:border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0"
+                  className="w-12 h-12 border-2 hover:border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0"
                 >
                   SM
                 </button>
                 <button
                   type="button"
-                  class="w-12 h-12 border-2 hover:border-gray-800 border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0"
+                  className="w-12 h-12 border-2 hover:border-gray-800 border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0"
                 >
                   MD
                 </button>
                 <button
                   type="button"
-                  class="w-12 h-12 border-2 hover:border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0"
+                  className="w-12 h-12 border-2 hover:border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0"
                 >
                   LG
                 </button>
                 <button
                   type="button"
-                  class="w-12 h-12 border-2 hover:border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0"
+                  className="w-12 h-12 border-2 hover:border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0"
                 >
                   XL
                 </button>
               </div>
             </div> */}
-            {/* <hr class="my-8" /> */}
+            {/* <hr className="my-8" /> */}
             {/* <div>
-              <h3 class="text-lg font-bold text-gray-800">Choose a Color</h3>
-              <div class="flex flex-wrap gap-4 mt-4">
+              <h3 className="text-lg font-bold text-gray-800">Choose a Color</h3>
+              <div className="flex flex-wrap gap-4 mt-4">
                 <button
                   type="button"
-                  class="w-12 h-12 bg-black border-2 border-white hover:border-gray-800 rounded-full shrink-0"
+                  className="w-12 h-12 bg-black border-2 border-white hover:border-gray-800 rounded-full shrink-0"
                 ></button>
                 <button
                   type="button"
-                  class="w-12 h-12 bg-gray-400 border-2 border-white hover:border-gray-800 rounded-full shrink-0"
+                  className="w-12 h-12 bg-gray-400 border-2 border-white hover:border-gray-800 rounded-full shrink-0"
                 ></button>
                 <button
                   type="button"
-                  class="w-12 h-12 bg-orange-400 border-2 border-white hover:border-gray-800 rounded-full shrink-0"
+                  className="w-12 h-12 bg-orange-400 border-2 border-white hover:border-gray-800 rounded-full shrink-0"
                 ></button>
                 <button
                   type="button"
-                  class="w-12 h-12 bg-red-400 border-2 border-white hover:border-gray-800 rounded-full shrink-0"
+                  className="w-12 h-12 bg-red-400 border-2 border-white hover:border-gray-800 rounded-full shrink-0"
                 ></button>
               </div>
             </div> */}
-            <hr class="my-8" />
-            <div class="flex flex-wrap gap-4">
+            <hr className="my-8" />
+            <div className="flex flex-wrap gap-4">
               <button
                 type="button"
-                class="min-w-[200px] px-4 py-3 bg-gray-800 hover:bg-gray-900 text-white text-sm font-bold rounded"
+                className="min-w-[200px] px-4 py-3 bg-gray-800 hover:bg-gray-900 text-white text-sm font-bold rounded"
               >
                 Buy now
               </button>
               <button
                 type="button"
-                class="min-w-[200px] px-4 py-2.5 border border-gray-800 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-bold rounded"
+                className="min-w-[200px] px-4 py-2.5 border border-gray-800 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-bold rounded"
               >
                 Add to cart
               </button>
             </div>
           </div>
         </div>
-        <div class="mt-24 max-w-4xl">
-          <ul class="flex border-b">
-            <li class="text-gray-800 font-bold text-sm bg-gray-100 py-3 px-8 border-b-2 border-gray-800 cursor-pointer transition-all">
+        <div className="mt-24 max-w-4xl">
+          <ul className="flex border-b">
+            <li className="text-gray-800 font-bold text-sm bg-gray-100 py-3 px-8 border-b-2 border-gray-800 cursor-pointer transition-all">
               Description
             </li>
-            <li class="text-gray-400 font-bold text-sm hover:bg-gray-100 py-3 px-8 cursor-pointer transition-all">
+            <li className="text-gray-400 font-bold text-sm hover:bg-gray-100 py-3 px-8 cursor-pointer transition-all">
               Reviews
             </li>
           </ul>
-          <div class="mt-8">
-            <h3 class="text-lg font-bold text-gray-800">Product Description</h3>
-            <p class="text-sm text-gray-400 mt-4">{product.description}</p>
+          <div className="mt-8">
+            <h3 className="text-lg font-bold text-gray-800">
+              Product Description
+            </h3>
+            <p className="text-sm text-gray-400 mt-4">{product.description}</p>
           </div>
         </div>
       </div>

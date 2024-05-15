@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 "use client";
@@ -30,7 +31,7 @@ export default function Home() {
           <img
             src="/landing1.jpg"
             alt="Banner Image"
-            class="object-bottom absolute inset-0 w-full h-full object-cover "
+            className="object-bottom absolute inset-0 w-full h-full object-cover "
           />
           <div className="min-h-[300px] relative z-50 h-full max-w-6xl mx-auto flex flex-col justify-center items-center text-center text-white p-6">
             <h2 className="sm:text-4xl text-2xl font-bold mb-6"> MEN'S </h2>

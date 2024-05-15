@@ -5,12 +5,13 @@ import Link from "next/link";
 import { useEffect, useReducer, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getUser, isLogined, logout } from "@/utils/helper";
+import Image from "next/image";
 
 const Header = () => {
   //log out
   const onLogoutClick = () => {
     logout();
-    router.replace("/"); // hoặc router.replace("/");
+    router.replace("/");
   };
   //category
   const [categories, setCategories] = useState([]);
@@ -49,7 +50,8 @@ const Header = () => {
       <div className="flex flex-wrap items-center lg:gap-y-2 gap-4 w-full">
         {/* Logo */}
         <a href="./">
-          <img src="/logoH.png" alt="logo" className="w-25 h-11" />{" "}
+          {/* <img src="/logoH.png" alt="logo" className="w-25 h-11" />{" "} */}
+          <Image src="/logoH.png" alt="logo" width={50} height={50} />{" "}
         </a>
         {/* collapseMenu */}
         <div
@@ -66,6 +68,7 @@ const Header = () => {
                 Home
               </a>
             </li>
+
             {/* Product */}
             <li className="max-lg:border-b max-lg:py-3 px-3">
               <a
@@ -76,6 +79,7 @@ const Header = () => {
                 Product
               </a>
             </li>
+
             {/* Categories */}
             <li style={{ position: "relative" }}>
               <button
@@ -91,7 +95,7 @@ const Header = () => {
                   onMouseEnter={() => setMenuOpen(true)}
                   onMouseLeave={() => setMenuOpen(false)}
                   id="dropdownNavbar"
-                  className="z-50 absolute shadow-lg bg-white py-2 z-[1000] min-w-full w-max rounded max-h-96 overflow-auto"
+                  className="z-50 absolute shadow-lg bg-white py-2 min-w-full w-max rounded max-h-96 overflow-auto"
                 >
                   <ul
                     className="py-2 text-base text-gray-950"
@@ -104,7 +108,6 @@ const Header = () => {
                             href={"/category/" + val.id}
                             className="block px-4 py-2 hover:bg-gray-100 text-black text-base hover:font-bold	 "
                           >
-                            {/* 'py-3 px-6 hover:bg-gray-100 text-black text-sm cursor-pointer */}
                             {val.attributes.name}
                           </Link>
                         </li>
@@ -142,10 +145,11 @@ const Header = () => {
                 <path d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z"></path>
               </svg>
             </button>
-            {/* EndSearchBtn */}
           </div>
         </form>
-        {/* Favorite */}
+        {/* EndSearchBtn */}
+
+        {/* wishlist */}
         <div className="flex items-center space-x-8">
           <span className="relative">
             <svg
@@ -163,6 +167,7 @@ const Header = () => {
               0
             </span>
           </span>
+
           {/* Cart */}
           <Link href="/cart">
             <span className="relative">
@@ -204,7 +209,7 @@ const Header = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   width="35px"
                   height="35px"
-                  class="cursor-pointer hover:fill-black"
+                  className="cursor-pointer hover:fill-black"
                   viewBox="0 0 512 512"
                   style={{ fill: "#D5D5D5" }} // Thêm style fill để đổi màu
                 >
@@ -219,7 +224,7 @@ const Header = () => {
                   onMouseEnter={() => setProfileOpen(true)}
                   onMouseLeave={() => setProfileOpen(false)}
                   id="dropdownLeftEnd"
-                  className="right-2 z-50 absolute shadow-lg bg-white py-2 z-[11] min-w-1 w-30 rounded max-h-96 overflow-auto "
+                  className="right-2 z-50 absolute shadow-lg bg-white py-2  min-w-1 w-30 rounded max-h-96 overflow-auto "
                 >
                   <ul
                     className="py-2 text-base text-gray-950"
@@ -241,11 +246,11 @@ const Header = () => {
                         View profile
                       </li>
                     </Link>
-                    <li class="py-2.5 px-6 flex items-center hover:bg-gray-100 text-[#333] text-sm cursor-pointer">
+                    <li className="py-2.5 px-6 flex items-center hover:bg-gray-100 text-[#333] text-sm cursor-pointer">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
-                        class="w-[18px] h-[18px] mr-3"
+                        className="w-[18px] h-[18px] mr-3"
                         viewBox="0 0 512 512"
                       >
                         <path
@@ -258,12 +263,12 @@ const Header = () => {
                     {/* Log out  */}
                     <li
                       onClick={onLogoutClick}
-                      class="py-2.5 px-6 flex items-center hover:bg-gray-100 text-[#333] text-sm cursor-pointer"
+                      className="py-2.5 px-6 flex items-center hover:bg-gray-100 text-[#333] text-sm cursor-pointer"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
-                        class="w-[18px] h-[18px] mr-3"
+                        className="w-[18px] h-[18px] mr-3"
                         viewBox="0 0 6.35 6.35"
                       >
                         <path

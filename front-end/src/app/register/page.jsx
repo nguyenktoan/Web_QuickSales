@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { callAPI } from "@/utils/api-caller";
 import { setToken, setUser } from "@/utils/helper";

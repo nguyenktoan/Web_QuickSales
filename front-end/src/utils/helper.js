@@ -1,14 +1,25 @@
 export const setToken = (token) => {
-  localStorage.setItem("token", token);
+  if (typeof window !== "undefined") {
+    localStorage.setItem("token", token);
+  }
 };
+
 export const setUser = (user) => {
-  localStorage.setItem("user", user);
+  if (typeof window !== "undefined") {
+    localStorage.setItem("user", user);
+  }
 };
+
 export const getToken = () => {
-  return localStorage.getItem("token");
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("token");
+  }
 };
+
 export const getUser = () => {
-  return localStorage.getItem("user");
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("user");
+  }
 };
 
 function parseJwt(token) {

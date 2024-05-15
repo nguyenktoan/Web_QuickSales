@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { callAPI } from "@/utils/api-caller";
 import { setToken, setUser } from "@/utils/helper";
@@ -36,10 +37,12 @@ const LoginPage = () => {
             <h2 className="lg:text-5xl text-4xl font-extrabold lg:leading-[55px]">
               Easy Access to Exclusive Shoe Collections
             </h2>
+
             <p className="text-sm mt-6">
               Explore our curated shoe collections effortlessly with our
               seamless login process. Enjoy hassle-free access to your account.
             </p>
+
             <p className="text-sm mt-10">
               Don't have an account{" "}
               <a
@@ -50,6 +53,7 @@ const LoginPage = () => {
               </a>
             </p>
           </div>
+
           <form className="space-y-6 max-w-md md:ml-auto max-md:mx-auto w-full">
             <h3 className="text-3xl font-extrabold mb-8 max-md:text-center">
               Sign in

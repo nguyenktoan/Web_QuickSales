@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="mt-3 bg-[#383838] p-10 font-[sans-serif] mb-0">
+    <footer className="bottom-0 left-0 right-0 mt-3 bg-[#383838] p-10 font-[sans-serif] mb-0">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div className="lg:flex lg:items-center">
           <a href="javascript:void(0)">
